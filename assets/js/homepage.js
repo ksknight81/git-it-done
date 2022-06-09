@@ -46,7 +46,7 @@ var getUserRepos = function(user) {
     alert("Unable to connect to GitHub");
   })
 };
-
+ 
 //getUserRepos("lernantino");
 // this will run the formSubmitHandler function when the submit is clicked
 userFormEl.addEventListener("submit", formSubmitHandler);

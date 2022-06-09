@@ -1,5 +1,7 @@
 // variable to reference the issues container below
 var issueContainerEl = document.querySelector("#issues-container");
+// DOM reference to the over 30 limit warning at #limit-warning
+var limitWarningEl = document.querySelector("#limit-warming");
 
 var getRepoIssues = function(repo) {
     console.log(repo);
@@ -12,6 +14,10 @@ var getRepoIssues = function(repo) {
                 // pass the response data to the dom function
                 displayIssues(data);
                 
+                // check if api has paginated issues
+                if (response.headers.get("Link")) {
+                    displayWarning(repo) 
+                }
             });
         }
         else {
@@ -56,5 +62,18 @@ var displayIssues = function(issues) {
         issueContainerEl.appendChild(issueEl);
     }
 };
+
+var displayWarning = function(repo) {
+    // add text to warning container
+    limitWarningEl.textContent = "To see more than 30 issues, visit ";
+    var linkEl = document.createElement("a");
+    linkEl.textContent = "See More Issues on GitHub.com";
+    linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
+    linkEl.setAttribute("target", "_blank");
+
+    // append to warning container
+    limitWarningEl.appendChild(linkEl);
+};
+
 // to hard code put in "facebook/react" or "ksknight81/robot-gladiators"
-getRepoIssues("ksknight81/git-init-sample");
+getRepoIssues("facebook/react");

@@ -1,3 +1,24 @@
+var repoNameEl = document.querySelector("#repo-name");
+
+getRepoName(){
+    var queryString = document.location.search;
+    var repoName = queryString.split("=")[1];
+
+    if(repoName) {
+        repoNameEl.textContent = repoName;
+        getRepoIssues(repoName);
+        } else {
+            document.location.replace("./index.html");
+        }
+    
+    // getRepoIssues(repoName);
+    // repoNameEl.textContent = repoName;
+    
+}
+
+
+
+
 // variable to reference the issues container below
 var issueContainerEl = document.querySelector("#issues-container");
 // DOM reference to the over 30 limit warning at #limit-warning
@@ -21,10 +42,14 @@ var getRepoIssues = function(repo) {
             });
         }
         else {
-            alert("There was a problem with your request!");
+            // if not successful, redirecto to homepage
+            document.location.replace("./index.html");
+            //alert("There was a problem with your request!");
         }
     });    
 }
+
+
 
 var displayIssues = function(issues) {
     if (issues.length === 0) {
@@ -76,4 +101,5 @@ var displayWarning = function(repo) {
 };
 
 // to hard code put in "facebook/react" or "ksknight81/robot-gladiators"
-getRepoIssues("facebook/react");
+getRepoIssues("");
+getRepoName();
